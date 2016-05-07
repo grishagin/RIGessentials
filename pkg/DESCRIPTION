@@ -1,0 +1,11 @@
+Package: RIGessentials
+Type: Package
+Title: A few functions to simplify daily operations
+Version: 1.0
+Depends: tcltk
+Date: 2016-05-06
+Author: Ivan Grishagin
+Maintainer: Ivan Grishagin <grishagin@gmail.com>
+Description: A few functions I use frequently enough to make a package.  
+Their names are mostly self-explanatory.
+License: GPL-2
