@@ -67,6 +67,8 @@ function(packages=NULL){
                                 ,character.only = TRUE
                                 ,warn.conflicts=FALSE))     
         cat("All packages were successfully loaded!")
-        tkmessageBox(message = "All packages were successfully loaded!", icon = "info", type = "ok")
+        invisible(tkmessageBox(message = "All packages were successfully loaded!"
+                               ,icon = "info"
+                               ,type = "ok"))
         
 }
