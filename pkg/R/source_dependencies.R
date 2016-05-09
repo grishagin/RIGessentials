@@ -1,7 +1,7 @@
 source_dependencies<-
     function(dirs){
         dependencies_files<-
-            unlist(lapply(dependencies_dir
+            unlist(lapply(dirs
                           ,list.files
                           ,pattern = "\\.R"
                           ,full.names = TRUE
