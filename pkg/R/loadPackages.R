@@ -8,18 +8,19 @@ function(packages=NULL){
                 ,character.only = TRUE
                 ,warn.conflicts=FALSE)  
         if(is.null(packages)){
-            packages<-c("arrayQualityMetrics"
-                        ,"limma"
-                        ,"beadarray"
-                        ,"statmod"
-                        ,"illuminaMousev2.db"
-                        ,"gplots"
-                        ,"xlsx"
-                        ,"XLConnect"
-                        ,"VennDiagram"
-                        ,"annotate"
-                        ,"stringr"
-                        ,"gtools")
+            packages<-
+                    c("plyr"
+                      ,"dplyr"
+                      ,"ggplot2"
+                      ,"rBiopaxParser"
+                      ,"xlsx"
+                      ,"openxlsx"
+                      ,"readxl"
+                      ,"graph"
+                      ,"httr"
+                      ,"rvest"
+                      ,"data.table"
+                      )
         }
 
         #find out what's missing
