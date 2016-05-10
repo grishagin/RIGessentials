@@ -1,8 +1,8 @@
 Package: RIGessentials
 Type: Package
 Title: A few functions to simplify daily operations
-Version: 1.0
-Depends: tcltk
+Version: 1.1
+Depends: tcltk, dplyr, stringdist, qdap
 Date: 2016-05-06
 Author: Ivan Grishagin
 Maintainer: Ivan Grishagin <grishagin@gmail.com>
