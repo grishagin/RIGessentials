@@ -5,6 +5,7 @@ tkradio_from_vect<-
         require(tcltk)
         #initialize window
         window <- tktoplevel()
+        tkwm.title(window,"Selector")
         #choose default option
         rbValue <- tclVar(vect[1])
         #add title
