@@ -9,8 +9,13 @@ tkradio_from_vect<-
         #choose default option
         rbValue <- tclVar(vect[1])
         #add title
+        title_font<-
+            tkfont.create(family = "Arial"
+                          ,size = 12
+                          ,weight = "bold")
         tkgrid(tklabel(window
-                       ,text = window_title)
+                       ,text = window_title
+                       ,font=title_font)
                ,columnspan = 2
                ,padx = 10
                ,pady = c(15, 5))
