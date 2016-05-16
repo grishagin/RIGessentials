@@ -18,37 +18,49 @@ trim_fun_file_based_on_main<-
         #read "main" script
         main<-
             readLines(main_file_path)
+        #vector of strings from functions file
+        funs_vect<-
+            readLines(fun_file_path)
+        
         #find which funs are in use in "main" code
+        #as well as which ones the functions file refers to itself
         funs_present<-
             sapply(funs_all
                    ,FUN=function(fun_name){
-                       length(grep(fun_name,main))>0
+                       length(grep(fun_name
+                                   ,main))>0 |
+                           length(grep(paste0(fun_name
+                                              ,"\\(")
+                                       ,funs_vect))>0
                    }) %>%
             unlist %>%
             funs_all[.]
         
-        #vector of strings from functions file
-        funs_vect<-
-            readLines(fun_file_path)
         #indices strings that contain names of all functions
         all_fun_indices<-
             which(grepl(paste(funs_all
                               ,collapse="|"),funs_vect) &
                       grepl("<-",funs_vect))
         #indices of lines with names of present functions
-        present_fun_indices<-
+        present_fun_indices_START<-
             which(grepl(paste(funs_present
                               ,collapse="|"),funs_vect) &
                       grepl("<-",funs_vect))
+        present_fun_indices_END<-
+            c(all_fun_indices[match(present_fun_indices_START,all_fun_indices)+1]-1
+              ,length(funs_vect)) %>%
+            .[complete.cases(.)]
         #vector to store correct order of functions
         funs_present_new<-NULL
         #split vector of lines by functions
         funs_list<-
-            lapply(present_fun_indices
-                   ,FUN=function(fstart){
+            lapply(1:length(present_fun_indices_START)
+                   ,FUN=function(index){
                        #get the end as the next function index minus one line
+                       fstart<-
+                           present_fun_indices_START[index]
                        fend<-
-                           all_fun_indices[which(all_fun_indices==fstart)+1]-1
+                           present_fun_indices_END[index]
                        
                        while(length(grep("}",funs_vect[fend]))<1){
                            #if the closing function bracket is not in the line
