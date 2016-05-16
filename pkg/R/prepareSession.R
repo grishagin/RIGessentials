@@ -1,7 +1,10 @@
 prepareSession <-
-function(work_dir="C:/"){
+    function(work_dir="C:/"
+             ,nolocale=FALSE){
         #avoid changing the encoding
-        Sys.setlocale(category = "LC_ALL", locale = "C")
+        if(nolocale){
+            Sys.setlocale(category = "LC_ALL", locale = "C")
+        }
         #say no to stings as factors in dataframe
         options(stringsAsFactors = FALSE)
         tryCatch(setwd(work_dir)
@@ -11,5 +14,5 @@ function(work_dir="C:/"){
                      message("Working directory set to "
                              ,getwd())
                  })
-
+        
     }
