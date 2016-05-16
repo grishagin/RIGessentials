@@ -21,6 +21,6 @@ character string. Name of the package to be subjected to dismantling.
 character string. Path to directory where to save the file(s) with functions.
   }
    \item{path}{
-logical. One file (TRUE) or many (FALSE)?
+logical. One file (\code{TRUE}) or many (\code{FALSE})?
   }
 }
