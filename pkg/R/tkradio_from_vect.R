@@ -24,7 +24,9 @@ tkradio_from_vect<-
         for (index in 1:length(vect)){
             rbindex<-paste0("rb",index)
             window$env[[rbindex]] <- tkradiobutton(window)
-            tkconfigure(window$env[[rbindex]], variable = rbValue, value = vect[index])
+            tkconfigure(window$env[[rbindex]]
+                        ,variable = rbValue
+                        ,value = vect[index])
             tkgrid(tklabel(window
                            ,text = vect[index])
                    ,window$env[[rbindex]]
