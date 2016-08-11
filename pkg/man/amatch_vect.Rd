@@ -22,8 +22,12 @@ The output is a dataframe with 6 columns:\cr
 
 }
 \usage{
-amatch_vect(what_vect, to_what_vect, maxDist=0.4,
-            dictionary_list=NULL, replacement_vect=NULL)
+amatch_vect(what_vect
+            ,to_what_vect
+            ,maxDist=0.4
+            ,dictionary_list=NULL
+            ,replacement_vect=NULL
+            ,no_exact_match=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,10 +38,15 @@ amatch_vect(what_vect, to_what_vect, maxDist=0.4,
   vector to compare to.
   }
   \item{maxDist}{
-  
+  degree of difference, measured as a fraction of string length. Can take values from 0 to 1.
   }
   \item{dictionary_list}{
+  list of values to replace before matching.
   }
   \item{replacement_vect}{
+  vector of values to replace those values in the \code{dictionary_list}.
+  }
+  \item{no_exact_match}{
+  logical. Discard all exact matches? May be useful if your list has exact matches (which you know about), and you just want to focus on approximate matches.
   }
 }

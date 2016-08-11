@@ -1,9 +1,11 @@
 #function to match two vectors; output a dataframe
+#v1.1
 amatch_vect<-function(what_vect
                       ,to_what_vect
                       ,maxDist=0.4
                       ,dictionary_list=NULL
-                      ,replacement_vect=NULL){
+                      ,replacement_vect=NULL
+                      ,no_exact_match=FALSE){
     require("dplyr")
     require("qdap")
     require("stringdist")
@@ -102,10 +104,20 @@ amatch_vect<-function(what_vect
                    if(maxDist_char<1){
                        maxDist_char<-1
                    }
+                   #check if we want to remove exact matches
+                   #and if so, remove them before performing the search
+                   to_what_temp<-
+                       to_what_vect_clean
+                   
+                   if (no_exact_match){
+                       to_what_temp[to_what_temp==element]<-NA
+                   } 
                    match.element<-
                        amatch(element
-                              ,to_what_vect_clean
+                              ,to_what_temp
                               ,maxDist = maxDist_char)
+                   return(match.element)
+                   
                })
     
     
