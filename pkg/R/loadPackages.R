@@ -1,5 +1,6 @@
 loadPackages <-
-function(packages=NULL){
+function(packages=NULL
+         ,verbose=TRUE){
         #function checks if packages are installed
         #if not - installs them
         #then loads them all
@@ -68,8 +69,9 @@ function(packages=NULL){
                                 ,character.only = TRUE
                                 ,warn.conflicts=FALSE))     
         cat("All packages were successfully loaded!")
-        invisible(tkmessageBox(message = "All packages were successfully loaded!"
-                               ,icon = "info"
-                               ,type = "ok"))
-        
+        if(verbose){
+            invisible(tkmessageBox(message = "All packages were successfully loaded!"
+                                   ,icon = "info"
+                                   ,type = "ok"))
+        }
 }

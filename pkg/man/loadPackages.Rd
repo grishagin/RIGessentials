@@ -11,11 +11,15 @@ Function checks which packages are installed, and installs the missing ones from
 After that, all packages are loaded.
 }
 \usage{
-loadPackages(packages = NULL)
+loadPackages(packages = NULL
+             ,verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{packages}{
 character vector of packages to be loaded/installed.
   }
+  \item{verbose}{
+show a popup notification upon successful package loading.
+}
 }
