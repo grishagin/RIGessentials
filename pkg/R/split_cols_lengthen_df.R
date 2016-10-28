@@ -4,6 +4,17 @@ split_cols_lengthen_df <-
              ,patternToSplit="\\|"
              ,at_once=TRUE){
         #called by add.MULT.symbols.entrezids
+        if(!all(colsToSplit %in% colnames(dFrame))){
+            message("split_cols_lengthen_df: not all desired columns were found in dataframe!")
+            colsToSplit<-
+                colsToSplit %>%
+                .[. %in% colnames(dFrame)]
+            message("Using only the following columns:\n"
+                    ,paste(colsToSplit
+                           ,collapse = ", "))
+        }
+        
+        
         
         #ensure it's not a tibble
         dFrame<-
@@ -33,12 +44,23 @@ split_cols_lengthen_df <-
                 adply(.margin=1
                       ,.fun=function(dfrow){
                           #split every desired column by pattern
+                          
                           splitvals_list<-
-                              lapply(colsToSplit
-                                     ,FUN=function(colN){
-                                         unlist(strsplit(dfrow[,colN]
-                                                         ,split=patternToSplit))
-                                     })
+                              as.character(dfrow[,colsToSplit]) %>%
+                              strsplit(split=patternToSplit)
+                          
+                              # lapply(colsToSplit
+                              #        ,FUN=function(colN){
+                              #            if(!is.na(dfrow[,colN])){
+                              #                strsplit(dfrow[,colN]
+                              #                         ,split=patternToSplit) %>%
+                              #                    unlist %>%
+                              #                    return
+                              #            } else {
+                              #                return(NA)
+                              #            }
+                                         
+                                     # })
                           #get max of the lengths of every vector in list
                           veclens<-
                               sapply(splitvals_list
