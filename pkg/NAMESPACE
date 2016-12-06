@@ -1,1 +1,16 @@
-exportPattern("^[[:alpha:]]+")
+export("amatch_vect.R"
+		,"file_name_from_path.R"
+		,"getAllFunctionsFromPackage.R"
+		,"loadPackages.R"
+		,"merge_fun_files.R"
+		,"prepareSession.R"
+		,"source_dependencies.R"
+		,"split_col_widen_df.R"
+		,"split_cols_lengthen_df.R"
+		,"split_fun_file_into_many.R"
+		,"stripNames.R"
+		,"tkradio_from_vect.R"
+		,"trim_fun_file_based_on_main.R"
+		,"update_RIGessentials.R"
+		,"writeTableUseBytes.R"
+)
