@@ -5,7 +5,8 @@ fun_names=(*.R)
 # overwrite the file 
 printf 'export(' > 'NAMESPACE'
 # append the first filename on the same line
-printf '"%s"\n' ${fun_names[@]:0:1} >> 'NAMESPACE'
+ff=${fun_names[@]:0:1}
+printf '"%s"\n' ${ff::-2} >> 'NAMESPACE'
 
 # loop through all functions' file names
 for f in ${fun_names[@]:1}

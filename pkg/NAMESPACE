@@ -1,4 +1,4 @@
-export("amatch_vect.R"
+export("amatch_vect"
 		,"file_name_from_path"
 		,"getAllFunctionsFromPackage"
 		,"loadPackages"
