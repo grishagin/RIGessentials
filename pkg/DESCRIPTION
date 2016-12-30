@@ -1,10 +1,16 @@
 Package: RIGessentials
 Type: Package
 Title: A few functions to simplify daily operations
-Version: 1.9
-Depends: tcltk, dplyr, stringdist, qdap
-Date: 2016-12-01
+Version: 2.0
+Depends:
+    tcltk,
+    dplyr,
+    stringdist,
+    qdap
+Date: 2016-12-30
 Author: Ivan Grishagin
 Maintainer: Ivan Grishagin <grishagin@gmail.com>
-Description: A few functions I use frequently enough to justify making a package.
+Description: A few functions I use frequently enough to justify making a
+    package.
 License: GPL-2
+RoxygenNote: 5.0.1
