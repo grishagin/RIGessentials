@@ -1,9 +1,10 @@
 merge_cols_shorten_df <-
-function(dFrame=NULL
+    function(dFrame=NULL
              ,colKey=NULL
              ,colsToMerge=NULL
-             ,patternToMerge=","){
-    
+             ,patternToMerge="|"){
+        require(tidyr)
+        
         #if the columns to merge were not indicated
         #merge all of them
         if (is.null(colsToMerge)){
