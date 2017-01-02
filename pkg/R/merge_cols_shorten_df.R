@@ -3,7 +3,12 @@ merge_cols_shorten_df <-
              ,colKey=NULL
              ,colsToMerge=NULL
              ,patternToMerge="|"){
-        require(tidyr)
+        require(plyr)
+        require(data.table)
+        
+        #ensure dFrame is dataframe
+        dFrame<-
+            as.data.frame(dFrame)
         
         #if the columns to merge were not indicated
         #merge all of them
@@ -36,11 +41,10 @@ merge_cols_shorten_df <-
                           as.data.frame
                       
                       merged_id_df$KEY<-KEY
-                      merged_id_df<-
-                          merged_id_df %>%
-                          .[,c("KEY",colsToMerge)]
+                      
                       colnames(merged_id_df)<-
-                          c(colKey,colsToMerge)
+                          c(colsToMerge
+                            ,colKey)
                       
                       return(merged_id_df)
                   }) %>%

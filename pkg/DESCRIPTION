@@ -5,6 +5,8 @@ Version: 2.1
 Depends:
     tcltk,
     dplyr,
+	plyr,
+	data.table,
     stringdist,
     qdap
 Date: 2016-12-30
