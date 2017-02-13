@@ -9,7 +9,7 @@ idvect_to_df_by_index(id_vect, split = "-", asnum = TRUE)
 \arguments{
 \item{id_vect}{Vector, elements of which are to be processed.}
 
-\item{split}{Character, on which to split the vector (not a pattern!). Defaults to \code{\"-"}.}
+\item{split}{Character (not a pattern), on which to split the vector. Defaults to "-".}
 
 \item{asnum}{Logical. Keep only numeric values? Defaults to \code{TRUE}.}
 }

@@ -14,7 +14,7 @@ idvect_to_df_by_index<-
         #' @details 
         #' Returns a dataframe. By default, returns only numbers (see \code{asnum}) argument.
         #' @param id_vect Vector, elements of which are to be processed.
-        #' @param split Character, on which to split the vector (not a pattern!). Defaults to \code{\"-"}.
+        #' @param split Character (not a pattern), on which to split the vector. Defaults to "-".
         #' @param asnum Logical. Keep only numeric values? Defaults to \code{TRUE}.
 
         #' @author 
