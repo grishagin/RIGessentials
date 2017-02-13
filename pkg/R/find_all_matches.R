@@ -19,7 +19,7 @@ find_all_matches<-
 
         #' @author 
         #' Ivan Grishagin
-        inner_find_all_matches<-
+        internal_find_all_matches<-
             function(x
                      ,y_vect){
                 result<-
@@ -32,7 +32,7 @@ find_all_matches<-
         
         result<-
             x_vect %>%
-            lapply(inner_find_all_matches
+            lapply(internal_find_all_matches
                    ,y_vect=y_vect)
 
         #if unlisted result is of same length as result

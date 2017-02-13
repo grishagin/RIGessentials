@@ -21,8 +21,8 @@ trim_fun_file_based_on_main<-
         #find all functions that are required for the main scrip to run
         #including all 
         req_funs<-
-            inner_fun_recursive_presence_in_main(funs_list=all_funs_list
-                                                 ,str_vect=main)
+            internal_fun_recursive_presence_in_main(funs_list=all_funs_list
+                                                    ,str_vect=main)
         #list of required functions
         req_funs_list<-
             all_funs_list[names(all_funs_list) %in% req_funs]

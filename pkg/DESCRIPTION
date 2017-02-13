@@ -1,17 +1,19 @@
 Package: RIGessentials
 Type: Package
 Title: A few functions to simplify daily operations
-Version: 2.1
+Version: 2.3
 Depends:
     tcltk,
     dplyr,
-	plyr,
-	data.table,
+    plyr,
+    data.table,
     stringdist,
+	readxl,
     qdap
-Date: 2016-12-30
+Date: 2017-02-03
 Author: Ivan Grishagin
 Maintainer: Ivan Grishagin <grishagin@gmail.com>
-Description: A few functions I use frequently enough to justify making a package.
+Description: A few functions I use frequently enough to justify making a
+    package.
 License: GPL-2
 RoxygenNote: 5.0.1

@@ -1,4 +1,4 @@
-inner_fun_recursive_presence_in_main<-
+internal_fun_recursive_presence_in_main<-
     function(funs_list
              ,str_vect){
         #first, get a logical vector of function names 
@@ -20,8 +20,8 @@ inner_fun_recursive_presence_in_main<-
             ref_fun_names<-
                 funs_list[present_logi] %>%
                 lapply(FUN=function(pres_fun_vect){
-                    inner_fun_recursive_presence_in_main(funs_list=funs_list[!present_logi]
-                                                         ,str_vect=pres_fun_vect)
+                    internal_fun_recursive_presence_in_main(funs_list=funs_list[!present_logi]
+                                                            ,str_vect=pres_fun_vect)
                 }) %>%
                 unlist
             
