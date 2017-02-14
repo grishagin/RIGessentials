@@ -1,6 +1,5 @@
 update_RIGessentials<-
     function(){
-        #unloadNamespace(ns = "RIGessentials")
-        devtools::unload(pkg = inst("RIGessentials"))
+        unloadNamespace(ns = "RIGessentials")
         devtools::install_github("grishagin/RIGessentials",subdir = "pkg")
     }
