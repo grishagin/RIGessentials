@@ -3,7 +3,7 @@ split_cols_lengthen_df <-
              ,colsToSplit
              ,patternToSplit="\\|"
              ,at_once=TRUE){
-        #called by add.MULT.symbols.entrezids
+
         if(!all(colsToSplit %in% colnames(dFrame))){
             message("split_cols_lengthen_df: not all desired columns were found in dataframe!")
             colsToSplit<-
@@ -14,12 +14,11 @@ split_cols_lengthen_df <-
                            ,collapse = ", "))
         }
         
-        
-        
         #ensure it's not a tibble
         dFrame<-
             dFrame %>%
-            as.data.frame
+            as.data.frame %>% 
+            mutate(orig_order=1:nrow(dFrame))
         
         if(at_once){
             #find affected rows
@@ -37,68 +36,121 @@ split_cols_lengthen_df <-
             if (length(rowsAffected)<1){
                 return(dFrame)
             }
+            aff_list<-
+                aff_list_lens<-
+                as.list(rep(NA,length(colsToSplit)))
             
-            #for each row do the following
+            for (cndex in 1:length(colsToSplit)){
+                #split the affected values
+                aff_list[[cndex]]<-
+                    dFrame[rowsAffected
+                           ,colsToSplit[cndex]] %>% 
+                    as.character %>% 
+                    strsplit(split=patternToSplit)
+                
+                #find the lengths of each list element
+                aff_list_lens[[cndex]]<-
+                    aff_list[[cndex]] %>% 
+                    lapply(length) %>% 
+                    unlist
+            }
+            #find consensus max length for each element in each columns
+            aff_list_lens_max<-
+                aff_list_lens %>% 
+                do.call(cbind
+                        ,.) %>% 
+                apply(MARGIN = 1
+                      ,FUN = max)
+            
+            new_rowsAffected<-
+                rep(rowsAffected
+                    ,aff_list_lens_max)
+            
+            dFrame_aff<-
+                dFrame[new_rowsAffected,]
+            dFrame_nonaff<-
+                dFrame[-rowsAffected,]
+            
+            #compare each column length to the consensus max
+            #and replicate corresponding values if there's fewer of them
+            for (cndex in 1:length(colsToSplit)){
+                #tempcolumn -- actually, temp dataframe, 
+                #as we also take into consideration original order
+                tempcol<-
+                    dFrame[,c("orig_order"
+                              ,colsToSplit[cndex])] %>% 
+                    #and only take affected rows
+                    .[rowsAffected,]
+                
+                #which entries to simply replicate = where max number of elements exceeds
+                #current column number of elements
+                to_rep_rows<-
+                    which(aff_list_lens_max > aff_list_lens[[cndex]])
+                
+                #perform a sanity check, i.e. exclude cases like  a|b|c in one column
+                #and c|d in another
+                if(any(aff_list_lens[[cndex]][to_rep_rows]>1)){
+                    stop("split_cols_lengthen_df: some of your column '"
+                         ,colsToSplit[cndex]
+                         ,"' values have fewer elements than in other columns, but not one.")
+                }
+                #repeat rows which are to be repeated
+                repd_rows<-
+                    to_rep_rows %>% 
+                    rep(.
+                        ,aff_list_lens_max[.])
+                
+                #cook up replicated part of the dataframe
+                part1<-
+                    tempcol %>% 
+                    .[repd_rows,]
+                
+                #now get those rows, which will be replicated
+                #to accommodate properly split values from the list
+                #take the other part of the dataframe,
+                #and fill it with unlisted split values minus those values 
+                #which got replicated in the previous part
+                if(length(to_rep_rows)>0){
+                    #if previously detected rows were non-zero, then
+                    #exclude them from consideration
+                    to_rep_rows<-
+                        1:nrow(tempcol) %>% 
+                        .[-to_rep_rows]
+                } else{
+                    #else simply take all rows of the temp dataframe in question
+                    to_rep_rows<-
+                        1:nrow(tempcol)
+                }
+                
+                repd_rows<-
+                    to_rep_rows %>% 
+                    rep(.
+                        ,aff_list_lens_max[.])
+                #make this second part of the df by replicating the corresponding rows
+                #and replacing the original values with the split data from the list
+                part2<-
+                    tempcol %>% 
+                    .[repd_rows,]
+                part2[,colsToSplit[cndex]]<-
+                    aff_list[[cndex]][to_rep_rows] %>% 
+                    unlist
+                
+                #merge and arrange according to original order
+                #fill dataframe with new info while duplicating all relevant rows
+                dFrame_aff[,colsToSplit[cndex]]<-
+                    rbind(part1
+                          ,part2) %>% 
+                    arrange(orig_order) %>% 
+                    .[,colsToSplit[cndex]]
+            }
+            #bind affected and unaffected parts of the df together
+            #and arrange according to original order
             dFrame_proc<-
-                dFrame[rowsAffected,] %>%
-                adply(.margin=1
-                      ,.fun=function(dfrow){
-                          #split every desired column by pattern
-                          
-                          splitvals_list<-
-                              as.character(dfrow[,colsToSplit]) %>%
-                              strsplit(split=patternToSplit)
-                          
-                              # lapply(colsToSplit
-                              #        ,FUN=function(colN){
-                              #            if(!is.na(dfrow[,colN])){
-                              #                strsplit(dfrow[,colN]
-                              #                         ,split=patternToSplit) %>%
-                              #                    unlist %>%
-                              #                    return
-                              #            } else {
-                              #                return(NA)
-                              #            }
-                                         
-                                     # })
-                          #get max of the lengths of every vector in list
-                          veclens<-
-                              sapply(splitvals_list
-                                     ,length)
-                          
-                          #extend all vectors of length one 
-                          #to max vector length (on the list)
-                          #ALSO check if length of every vector has the same length
-                          splitvals_list<-
-                              splitvals_list %>%
-                              lapply(FUN=function(vect,N){
-                                  if(length(vect)==1){
-                                      vect<-
-                                          rep(vect,N)
-                                  } else if(length(vect)!=N){
-                                      message("Problem: max length is\n"
-                                              ,N
-                                              ,", and vector is "
-                                              ,paste(vect,collapse = " "))
-                                      print(dfrow)
-                                      print(splitvals_list)
-                                      stop("expand.df.via.split.col: Split value vectors have unequal lengths!\n")
-                                  }
-                                  return(vect)
-                              }
-                              ,N=max(veclens))
-                          
-                          #now all of the vectors on the list
-                          #should have the same lenghts
-                          dfrow<-
-                              dfrow[rep(1,max(veclens)),]
-                          dfrow[,colnames(dfrow) %in% colsToSplit]<-
-                              splitvals_list
-                          
-                          return(dfrow)
-                      }) %>%
-                #add the unaffected portion of the data frame
-                rbind.data.frame(dFrame[-rowsAffected,])
+                rbind(dFrame_aff
+                      ,dFrame_nonaff) %>% 
+                arrange(orig_order) %>% 
+                dplyr::select(-orig_order)
+            
         } else {
             #if it is to be applied iteratively
             #i.e. one column after the other
@@ -106,10 +158,10 @@ split_cols_lengthen_df <-
                 dFrame
             for(index in 1:length(colsToSplit)){
                 dFrame_proc<-
-                    expand.df.via.split.col(dFrame_proc
-                                            ,colsToSplit=colsToSplit[index]
-                                            ,patternToSplit=patternToSplit
-                                            ,at_once=TRUE)
+                    split_cols_lengthen_df(dFrame_proc
+                                           ,colsToSplit=colsToSplit[index]
+                                           ,patternToSplit=patternToSplit
+                                           ,at_once=TRUE)
             }
         }
         dFrame_proc[dFrame_proc=="NA"]<-
