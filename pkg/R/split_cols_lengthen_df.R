@@ -17,8 +17,7 @@ split_cols_lengthen_df <-
         #ensure it's not a tibble
         dFrame<-
             dFrame %>%
-            as.data.frame %>% 
-            mutate(orig_order=1:nrow(dFrame))
+            as.data.frame 
         
         if(at_once){
             #find affected rows
@@ -36,6 +35,11 @@ split_cols_lengthen_df <-
             if (length(rowsAffected)<1){
                 return(dFrame)
             }
+            #add original order of rows
+            dFrame<-
+                dFrame %>% 
+                mutate(orig_order=1:nrow(dFrame))
+            
             aff_list<-
                 aff_list_lens<-
                 as.list(rep(NA,length(colsToSplit)))
@@ -154,16 +158,15 @@ split_cols_lengthen_df <-
         } else {
             #if it is to be applied iteratively
             #i.e. one column after the other
-            dFrame_proc<-
-                dFrame
             for(index in 1:length(colsToSplit)){
                 dFrame_proc<-
-                    split_cols_lengthen_df(dFrame_proc
+                    split_cols_lengthen_df(dFrame
                                            ,colsToSplit=colsToSplit[index]
                                            ,patternToSplit=patternToSplit
                                            ,at_once=TRUE)
             }
         }
+        
         dFrame_proc[dFrame_proc=="NA"]<-
             NA
         return(dFrame_proc)
