@@ -22,4 +22,3 @@ Returns a dataframe. By default, returns only numbers (see \code{asnum}) argumen
 \author{
 Ivan Grishagin
 }
-

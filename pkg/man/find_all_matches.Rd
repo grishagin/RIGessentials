@@ -26,4 +26,3 @@ Returns a vector. By default, merges multiple matches via a \code{separator}.
 \author{
 Ivan Grishagin
 }
-
