@@ -1,7 +1,7 @@
 Package: RIGessentials
 Type: Package
 Title: A few functions to simplify daily operations
-Version: 2.6
+Version: 2.7
 Depends:
     tcltk,
     dplyr,
@@ -10,7 +10,7 @@ Depends:
     stringdist,
 	readxl,
     qdap
-Date: 2017-02-03
+Date: 2017-03-23
 Author: Ivan Grishagin
 Maintainer: Ivan Grishagin <grishagin@gmail.com>
 Description: A few useful general purpose functions.

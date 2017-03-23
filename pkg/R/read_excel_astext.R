@@ -24,13 +24,13 @@ read_excel_astext<-
         
         require(readxl)
         #first, read without specifying the type
-        tempDF<-
-            readxl::read_excel(path = path
-                               ,sheet = sheet
-                               ,col_names = col_names
-                               ,col_types = NULL
-                               ,na = na
-                               ,skip = skip)
+        suppressWarnings(tempDF<-
+                             readxl::read_excel(path = path
+                                                ,sheet = sheet
+                                                ,col_names = col_names
+                                                ,col_types = NULL
+                                                ,na = na
+                                                ,skip = skip))
         #count number of columns
         colnum<-
             ncol(tempDF)
