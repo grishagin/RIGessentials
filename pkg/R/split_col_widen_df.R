@@ -27,7 +27,9 @@ split_col_widen_df<-
         
         #use data.table built-in function
         newcol_df<-
-            DF[,tstrsplit(get(colToSplit),split=split)]
+            DF[,tstrsplit(get(colToSplit
+                              ,envir = environment())
+                          ,split=split)]
         
         #add column names
         if (is.null(newcolnames) |
