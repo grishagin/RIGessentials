@@ -8,7 +8,7 @@ split_col_widen_df<-
         #'Split Column Based on Pattern, Expand DF Widthwise
         #'@description 
         #'Wrapper for a \code{strsplit} function. 
-        #'In a given dataframe, splits values in \code{colToSplit} column using the \col{split} pattern, 
+        #'In a given dataframe, splits values in \code{colToSplit} column using the \code{split} pattern, 
         #'then adds one extra column for each member of a split vector of maximum length to the dataframe. 
         #'If after splitting the number of resultant elements in each row is not the same, fills missing values with NA.
         #'@param DF Dataframe or data.table object.
