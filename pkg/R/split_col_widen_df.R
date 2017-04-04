@@ -32,16 +32,30 @@ split_col_widen_df<-
                           ,split=split)]
         
         #add column names
-        if (is.null(newcolnames) |
-            length(newcolnames)!=ncol(newcol_df)){
-            colnames(newcol_df)<-
+        # if (is.null(newcolnames) |
+        #     length(newcolnames)!=ncol(newcol_df)){
+        #     colnames(newcol_df)<-
+        #         paste(colToSplit
+        #               ,1:ncol(newcol_df)
+        #               ,sep="")
+        # } else {
+        #     colnames(newcol_df)<-
+        #         newcolnames
+        # }
+        if(is.null(newcolnames) |
+           length(newcolnames)<ncol(newcol_df)){
+            newcolnames<-
                 paste(colToSplit
                       ,1:ncol(newcol_df)
                       ,sep="")
-        } else {
-            colnames(newcol_df)<-
-                newcolnames
+        }else if(length(newcolnames)>ncol(newcol_df)){
+            na_cols<-
+                newcolnames[(ncol(newcol_df)+1):length(newcolnames)]
+            newcol_df[,(na_cols) := NA_character_]
         }
+        
+        colnames(newcol_df)<-
+                newcolnames
         
         #find # of column that was split
         colToSplit_num<-
