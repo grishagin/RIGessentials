@@ -5,7 +5,7 @@
 \title{Merge Columns in Dataframe Using Pattern}
 \usage{
 merge_cols_shorten_df(dFrame = NULL, colKey = NULL, colsToMerge = NULL,
-  patternToMerge = "|")
+  patternToMerge = "|", return_other_cols = FALSE)
 }
 \arguments{
 \item{dFrame}{Dataframe or data.table object.}
@@ -16,10 +16,12 @@ merge_cols_shorten_df(dFrame = NULL, colKey = NULL, colsToMerge = NULL,
 In \code{colKey} column, duplicate values will be removed, and then this column will be bound to the merged columns.}
 
 \item{patternToMerge}{Pattern to use for merging of the values. Defaults to pipe (\code{|}).}
+
+\item{return_other_cols}{Boolean. Return any columns besides \code{colKey} and \code{colsToMerge}?}
 }
 \description{
 Looks up duplicate values in the \code{colKey} column, and then merges all corresponding
-values in the \code{colToMerge} column, separating them with a \code{patternToMerge} separator.
+values in the \code{colsToMerge} column, separating them with a \code{patternToMerge} separator.
 }
 \author{
 Ivan Grishagin
