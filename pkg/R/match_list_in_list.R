@@ -1,6 +1,7 @@
 match_list_in_list<-
     function(list1
-             ,list2){
+             ,list2
+             ,ignore=c(NA,"NA","")){
         #' @title
         #' Match List in List
         #' @description 
@@ -60,6 +61,8 @@ match_list_in_list<-
         which_list<-
             list1 %>% 
             lapply(FUN=function(vect){
+                vect<-
+                    vect[!vect %in% ignore]
                 which(list2_m %in% vect)
             })
         #which of those results are zero length -- make them NA
