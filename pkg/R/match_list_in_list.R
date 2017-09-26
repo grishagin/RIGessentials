@@ -1,7 +1,9 @@
 match_list_in_list<-
     function(list1
              ,list2
-             ,ignore=c(NA,"NA","")){
+             ,ignore=c(NA,"NA","")
+             ,only_best_match=TRUE
+             ,let_know_when_done=FALSE){
         #' @title
         #' Match List in List
         #' @description 
@@ -13,6 +15,9 @@ match_list_in_list<-
         #' The function is quite efficient: 50K list vs. 4K list with ~50 members per list element comparison takes only ~5 min (i5 laptop).
         #' @param list1 List to compare.
         #' @param list2 List to compare to.
+        #' @param ignore Values to ignore during comparison. Defaults to \code{c(NA,"NA","")}.
+        #' @param only_best_match Return only one best match (i.e. most overlap)? Defaults to TRUE.
+        #' @param let_know_when_done Windows-only! Show a window prompt when done? Defaults to TRUE. 
         #' 
         #' @author 
         #' Ivan Grishagin
@@ -90,13 +95,38 @@ match_list_in_list<-
                 modulo_m[rindex,]
             }) %>% 
             lapply(as.vector) %>% 
-            lapply(unique)
+            #lapply(unique)
+            lapply(function(vect){
+                if(length(vect)>1){
+                    #count number of matches
+                    #they're also auto-sorted 
+                    temp<-
+                        table(vect)
+                    #reverse values and names and return
+                    vect<-
+                        as.numeric(names(temp))
+                    names(vect)<-
+                        as.vector(temp)
+                    rm(temp)
+                }
+                return(vect)
+            })
+        
+        if(only_best_match){
+            results_list<-
+                results_list %>% 
+                lapply("[",1)
+        }
+        
         #remove NA values from non-NA list elements
         results_list[!is.na(results_list)]<-
             results_list[!is.na(results_list)] %>% 
             lapply(FUN=function(vect){
                 vect[!is.na(vect)]
             })
+        if(let_know_when_done){
+            tk_messageBox(type = "ok", message =  "List matching done!")
+        }
         
         return(results_list)
     }
