@@ -70,8 +70,8 @@ function(packages=NULL
                                 ,warn.conflicts=FALSE))     
         cat("All packages were successfully loaded!")
         if(verbose){
-            invisible(tkmessageBox(message = "All packages were successfully loaded!"
-                                   ,icon = "info"
-                                   ,type = "ok"))
+            invisible(try(tkmessageBox(message = "All packages were successfully loaded!"
+                                       ,icon = "info"
+                                       ,type = "ok")))
         }
 }
