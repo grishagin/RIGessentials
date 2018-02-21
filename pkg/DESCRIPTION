@@ -8,8 +8,7 @@ Depends:
     plyr,
     data.table,
     stringdist,
-	readxl,
-    qdap
+	readxl
 Date: 2017-06-12
 Author: Ivan Grishagin
 Maintainer: Ivan Grishagin <grishagin@gmail.com>
