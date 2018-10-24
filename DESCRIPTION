@@ -1,0 +1,16 @@
+Package: RIGessentials
+Type: Package
+Title: A few functions to simplify daily operations
+Version: 4.0
+Imports:
+    tcltk,
+    dplyr,
+    plyr,
+    data.table,
+    stringdist,
+    readxl
+Author: Ivan Grishagin
+Maintainer: Ivan Grishagin <grishagin@gmail.com>
+Description: A few useful general purpose functions.
+License: GPL-2
+RoxygenNote: 6.1.0
