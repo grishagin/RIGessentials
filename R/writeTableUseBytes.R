@@ -3,7 +3,8 @@ writeTableUseBytes <-
              ,fileName
              ,sep="\t"
              ,eol="\n"
-             ,useBytes=TRUE){
+             ,useBytes=TRUE
+             ,quote="\""){
 		    #' @export
 		    #' @title
         #' Write Dataframe to File As-Is
@@ -18,17 +19,31 @@ writeTableUseBytes <-
         #' @param useBytes Write as-is? Defaults to \code{TRUE}.
         #' If \code{TRUE}, suppresses the re-encoding  
         #' of marked strings so they are passed byte-by-byte to the connection.
-		
+        #' @param quote (String) Which marks to use around each entry?
+        #' Defaults to \code{"\""}.
+        #' If \code{quote=""}, the text will be written "as is".
+        #' 
+        #' @author Ivan Grishagin
+        
         lines_to_write<-
-			      rep(NA,nrow(dFrame)+1)
+			      rep(NA
+			          ,nrow(dFrame)+1)
+        
         lines_to_write[1]<-
-            paste0(colnames(dFrame),collapse=sep)
+            paste0(quote
+                   ,colnames(dFrame)
+                   ,quote
+                   ,collapse=sep)
         
         lines_to_write[2:length(lines_to_write)]<-
             apply(dFrame
                   ,MARGIN = 1
-                  ,FUN=paste0
-                  ,collapse=sep)
+                  ,FUN=function(x){
+                    paste0(quote
+                           ,x
+                           ,quote
+                           ,collapse=sep)
+                  })
         
         writeLines(text=lines_to_write
                    ,con=fileName
