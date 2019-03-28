@@ -37,8 +37,9 @@ merge_cols_shorten_df<-
       dFrame %>% 
       as.data.table
     message("line 39")
+    print(class(dFrame))
     dFrame_proc<-
-      dFrame[,.(newcol=paste(get(colsToMerge[1])
+      dFrame[,c(newcol=paste(get(colsToMerge[1])
                              ,collapse=patternToMerge))
              ,by=colKey]
     message("line 44")
