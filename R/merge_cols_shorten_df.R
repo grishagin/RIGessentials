@@ -19,26 +19,29 @@ merge_cols_shorten_df<-
     #'
     #' @author Ivan Grishagin
     
+    message("line 22")
     if (is.null(colsToMerge)) {
       colsToMerge<- 
         colnames(dFrame)
       colsToMerge<- 
         colsToMerge[colsToMerge != colKey]
     }
+    message("line 29")
+    
     if(is.null(dFrame)){
       stop("merge_cols_shorten_df: dFrame was not specified and cannot be NULL!")
     }
-    
+    message("line 34")
     #ensure dFrame is a data table
     dFrame<-
       dFrame %>% 
       as.data.table
-    
+    message("line 39")
     dFrame_proc<-
       dFrame[,.(newcol=paste(get(colsToMerge[1])
                              ,collapse=patternToMerge))
              ,by=colKey]
-    
+    message("line 44")
     if(length(colsToMerge)>1){
       for (cndex in 2:length(colsToMerge)){
         dFrame_proc<-
@@ -49,6 +52,7 @@ merge_cols_shorten_df<-
                 ,.)
       }
     }
+    message("line 55")
     colnames(dFrame_proc)<-
       c(colKey
         ,colsToMerge)
