@@ -39,14 +39,14 @@ merge_cols_shorten_df<-
     message("line 39")
     print(class(dFrame))
     dFrame_proc<-
-      dFrame[,c(newcol=paste(get(colsToMerge[1])
+      dFrame[,.(newcol=paste(get(colsToMerge[1])
                              ,collapse=patternToMerge))
              ,by=colKey]
     message("line 44")
     if(length(colsToMerge)>1){
       for (cndex in 2:length(colsToMerge)){
         dFrame_proc<-
-          dFrame[,c(newcol=paste(get(colsToMerge[cndex])
+          dFrame[,.(newcol=paste(get(colsToMerge[cndex])
                                  ,collapse=patternToMerge))
                  ,by=colKey]$newcol %>% 
           cbind(dFrame_proc
