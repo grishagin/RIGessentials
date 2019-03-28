@@ -19,6 +19,9 @@ merge_cols_shorten_df<-
     #'
     #' @author Ivan Grishagin
     
+    library(tidyverse)
+    library(data.table)
+    
     message("line 22")
     if (is.null(colsToMerge)) {
       colsToMerge<- 
