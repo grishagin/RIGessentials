@@ -42,26 +42,14 @@ merge_cols_shorten_df<-
       dFrame %>% 
       as.data.table
     message("line 39")
-    print(class(dFrame))
+
     dFrame_proc<-
-      dFrame[,.(newcol=paste(get(colsToMerge[1])
-                             ,collapse=patternToMerge))
+      dFrame[,lapply(.SD,paste,collapse=patternToMerge)
+             ,.SD=colsToMerge
              ,by=colKey]
-    message("line 44")
-    if(length(colsToMerge)>1){
-      for (cndex in 2:length(colsToMerge)){
-        dFrame_proc<-
-          dFrame[,newcol := paste(get(colsToMerge[cndex])
-                                 ,collapse=patternToMerge)
-                 ,by=colKey]$newcol %>% 
-          cbind(dFrame_proc
-                ,.)
-      }
-    }
+
+    
     message("line 55")
-    colnames(dFrame_proc)<-
-      c(colKey
-        ,colsToMerge)
     
     if(return_other_cols){
       dFrame_proc<-
