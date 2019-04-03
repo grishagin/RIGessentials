@@ -15,7 +15,9 @@ merge_cols_shorten_df<-
     #' @param colsToMerge Columns to merge and return. If \code{NULL}, merges all but the \code{colKey} column. 
     #' In \code{colKey} column, duplicate values will be removed, and then this column will be bound to the merged columns.
     #' @param patternToMerge Pattern to use for merging of the values. Defaults to pipe (\code{|}).
-    #' @param return_other_cols Boolean. Return any columns besides \code{colKey} and \code{colsToMerge}?
+    #' @param return_other_cols (boolean) 
+    #' Return any columns besides \code{colKey} and \code{colsToMerge}?
+    #' If so, all merged values in cols to merge will be repeated.
     #'
     #' @author Ivan Grishagin
     
@@ -49,8 +51,8 @@ merge_cols_shorten_df<-
     if(length(colsToMerge)>1){
       for (cndex in 2:length(colsToMerge)){
         dFrame_proc<-
-          dFrame[,.(newcol=paste(get(colsToMerge[cndex])
-                                 ,collapse=patternToMerge))
+          dFrame[,newcol := paste(get(colsToMerge[cndex])
+                                 ,collapse=patternToMerge)
                  ,by=colKey]$newcol %>% 
           cbind(dFrame_proc
                 ,.)
@@ -62,24 +64,11 @@ merge_cols_shorten_df<-
         ,colsToMerge)
     
     if(return_other_cols){
-      #convert to data.frame for simplicity of processing
-      dFrame<-
-        as.data.frame(dFrame)
       dFrame_proc<-
-        as.data.frame(dFrame_proc)
-      
-      #take rows of old dataframe and match them up with the new, shrunk one
-      dFrame<-
-        dFrame[match(dFrame_proc[,colKey]
-                     ,dFrame[,colKey])
-               ,]
-      #replace old cols with new ones in a shrunk old dFrame
-      dFrame[,c(colKey,colsToMerge)]<-
-        dFrame_proc
-      
-      dFrame_proc<-
-        dFrame %>% 
-        as.data.table
+        dFrame_proc %>% 
+        merge(y = dFrame[,(colsToMerge) := NULL]
+              ,by=colKey
+        )
     }
     
     return(dFrame_proc)
