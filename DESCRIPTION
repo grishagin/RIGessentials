@@ -1,7 +1,9 @@
 Package: RIGessentials
 Type: Package
 Title: A few functions to simplify daily operations
-Version: 4.2.1
+Version: 4.2.2
+Depends:
+	data.table
 Imports:
     tcltk,
     dplyr,

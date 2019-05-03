@@ -24,34 +24,30 @@ merge_cols_shorten_df<-
     library(tidyverse)
     library(data.table)
     
-    message("line 22")
     if (is.null(colsToMerge)) {
       colsToMerge<- 
         colnames(dFrame)
       colsToMerge<- 
         colsToMerge[colsToMerge != colKey]
     }
-    message("line 29")
-    
+
     if(is.null(dFrame)){
       stop("merge_cols_shorten_df: dFrame was not specified and cannot be NULL!")
     }
-    message("line 34")
+
     #ensure dFrame is a data table
     dFrame<-
       dFrame %>% 
       as.data.table
-    message("line 39")
 
+    #merge the desired columns
     dFrame_proc<-
       dFrame[,lapply(.SD,paste,collapse=patternToMerge)
              ,.SD=colsToMerge
              ,by=colKey]
 
-    
-    message("line 55")
-    
     if(return_other_cols){
+      #add to other (non-merged) columns if so desired
       dFrame_proc<-
         dFrame_proc %>% 
         merge(y = dFrame[,(colsToMerge) := NULL]
