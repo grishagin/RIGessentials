@@ -4,11 +4,13 @@
 \alias{prepareSession}
 \title{Prepare New Session}
 \usage{
-prepareSession(work_dir = getwd())
+prepareSession(work_dir = getwd(), create = FALSE)
 }
 \arguments{
-\item{work_dir}{(String) string specifying desired working directory.
+\item{work_dir}{(String) String specifying desired working directory.
 If directory does not exist, prompts the user to choose one using a tkwidget (Windows-only).}
+
+\item{create}{(Boolean) Create work directory?}
 }
 \description{
 Function prepares a new session:\cr
